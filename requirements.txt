@@ -1,0 +1,22 @@
+
+
+Ubicación: **`requirements.txt`**
+
+Contenido:
+selenium==4.11.2 pytest==7.4.0 webdriver-manager==4.0.0
+
+
+1. **Configura el entorno:**
+   - Instala las dependencias:
+     pip install -r requirements.txt
+     ```
+
+2. **Ejecuta las pruebas:**
+   - Lanza las pruebas con `pytest`:
+     pytest main.py
+     ```
+
+3. **Actualiza y sube los cambios al repositorio:**
+   git add .
+   git commit -m "Implementación de pruebas y configuración del proyecto"
+   git push origin main
