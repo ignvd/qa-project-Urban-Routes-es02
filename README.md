@@ -14,3 +14,9 @@ Este proyecto automatiza pruebas end-to-end para la aplicación web de Urban Rou
    ```bash
    git clone git@github.com:username/qa-project-Urban-Routes-es.git
    cd qa-project-Urban-Routes-es
+
+## Instala las dependencias:
+pip install -r requirements.txt
+
+## Inicia las pruebas:
+pytest main.py
