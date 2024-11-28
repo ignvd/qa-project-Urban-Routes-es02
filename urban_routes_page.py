@@ -1,41 +1,36 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-class UrbanRoutesPage:
-    def __init__(self, driver):
-        self.driver = driver
+class UrbanPage:
+    # Selectores
+    ADDRESS_INPUT = (By.ID, "address")
+    COMFORT_TARIFF = (By.CSS_SELECTOR, "button[data-tariff='comfort']")
+    PHONE_INPUT = (By.ID, "phone")
+    CREDIT_CARD_BUTTON = (By.ID, "add-card")
+    CVV_FIELD = (By.CLASS_NAME, "card-input")
+    CONFIRM_BUTTON = (By.XPATH, "//button[contains(text(), 'Confirmar')]")
+    DRIVER_MODAL = (By.ID, "driver-modal")
+    
+    # Métodos de interacción
+    def set_address(self, driver, address):
+        driver.find_element(*self.ADDRESS_INPUT).send_keys(address)
 
-    def set_address(self, address):
-        address_input = self.driver.find_element(By.ID, "address")
-        address_input.clear()
-        address_input.send_keys(address)
-        address_input.send_keys(Keys.RETURN)
+    def select_comfort_tariff(self, driver):
+        driver.find_element(*self.COMFORT_TARIFF).click()
 
-    def select_comfort_tariff(self):
-        self.driver.find_element(By.ID, "comfort-tariff").click()
+    def enter_phone_number(self, driver, phone_number):
+        driver.find_element(*self.PHONE_INPUT).send_keys(phone_number)
 
-    def fill_phone_number(self, phone):
-        phone_input = self.driver.find_element(By.ID, "phone")
-        phone_input.send_keys(phone)
-
-    def add_credit_card(self, card_number, expiration, cvv):
-        self.driver.find_element(By.ID, "add-card").click()
-        self.driver.find_element(By.ID, "card-number").send_keys(card_number)
-        self.driver.find_element(By.ID, "card-expiration").send_keys(expiration)
-        cvv_input = self.driver.find_element(By.ID, "code")
+    def add_credit_card(self, driver, cvv):
+        driver.find_element(*self.CREDIT_CARD_BUTTON).click()
+        cvv_input = driver.find_element(*self.CVV_FIELD)
         cvv_input.send_keys(cvv)
-        cvv_input.send_keys(Keys.TAB)
+        cvv_input.send_keys(Keys.TAB)  # Cambiar el foco
+        driver.find_element(*self.CONFIRM_BUTTON).click()
 
-    def request_items(self, item, quantity=1):
-        for _ in range(quantity):
-            self.driver.find_element(By.ID, f"add-{item}").click()
-
-    def confirm_request(self):
-        self.driver.find_element(By.ID, "confirm-request").click()
-
-    def wait_for_driver_info(self, timeout=60):
-        from selenium.webdriver.support.ui import WebDriverWait
-        from selenium.webdriver.support import expected_conditions as EC
-        WebDriverWait(self.driver, timeout).until(
-            EC.presence_of_element_located((By.ID, "driver-info"))
+    def wait_for_driver_modal(self, driver, timeout=10):
+        WebDriverWait(driver, timeout).until(
+            EC.presence_of_element_located(self.DRIVER_MODAL)
         )
