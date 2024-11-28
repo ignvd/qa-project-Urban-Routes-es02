@@ -34,3 +34,14 @@ class UrbanPage:
         WebDriverWait(driver, timeout).until(
             EC.presence_of_element_located(self.DRIVER_MODAL)
         )
+
+from selenium.webdriver.common.by import By
+
+class UrbanPage:
+    ADDRESS_FIELD = (By.ID, "address")
+    COMFORT_TARIFF_BUTTON = (By.CSS_SELECTOR, ".tariff-comfort")
+    PHONE_FIELD = (By.ID, "phone")
+    ADD_CARD_BUTTON = (By.ID, "add-card")
+    CVV_FIELD = (By.ID, "code")
+    MESSAGE_FIELD = (By.ID, "message")
+    SUBMIT_BUTTON = (By.ID, "submit")
